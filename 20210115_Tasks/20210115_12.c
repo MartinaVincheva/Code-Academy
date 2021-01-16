@@ -8,8 +8,7 @@ char str[] = "Hello";
 // str	[H][e][x][x][o][0]
 
 
-int main(void)
-{
+int main(void){
 	printf("Before \"%s\"\n", str);
 
 	str[2] = str[3] = 'x';

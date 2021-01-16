@@ -2,13 +2,11 @@
 
 static int myVar = 0;
 
-void test(void)
-{
+void test(void){
 	myVar++;
 }
 
-int main(void) 
-{
+int main(void){
 	test();
 	test();
 	test();

@@ -8,8 +8,7 @@ char rts[6];
 // str	[H][e][l][l][o][0]
 // rts	[o][l][l][e][H][0]
 
-int main(void)
-{
+int main(void){
 	int i = 0, j = 5;
 	
 	rst[j--] = '\0';

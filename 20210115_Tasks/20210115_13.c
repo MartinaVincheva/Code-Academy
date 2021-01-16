@@ -1,9 +1,7 @@
 #include <stdio.h>
 char str[] = "HELLO";
 
-int main(void)
-{
-	
+int main(void){
 	printf("Before \"%s\"\n", str);
 
 	str[0] += ('a' - 'A');

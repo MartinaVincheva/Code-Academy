@@ -4,8 +4,7 @@ const char* c_szText =
 	"instructions for "
 	"the program. \n";
 
-int main()
-{
+int main(){
 	printf("Help: %s", c_szText);
 	return 0;
 }

@@ -6,8 +6,7 @@ static const float RentPriceCaravana = 90.00 ;
 static const float RentPriceCamper = 100.00 ;
 static float sum = 0.0;
 
-char processUserInput()
-{
+char processUserInput(){
 	unsigned int rez ;
 	char choice;
 
@@ -17,22 +16,18 @@ char processUserInput()
 	scanf("%d", &rez);
 	printf("User selected %d\n", rez);
 	
-	if (1 == rez)
-	{
+	if (1 == rez){
 		if (Caravana >= 1) {
 			// Caravana
 			sum += RentPriceCaravana;
 			Caravana--;
 		}
-		else
-		{
+		else{
 			printf("Out of caravannas, please consider taking camper.\n");
 		}
 	}
-	else
-	{
-		if (2 == rez)
-		{
+	else{
+		if (2 == rez){
 			if (Camper >= 1) {
 				// Camper
 				sum += RentPriceCamper;
@@ -52,8 +47,7 @@ char processUserInput()
 	return(choice);
 }
 
-int main ()
-{
+int main (){
 	do {} while ('y' == processUserInput());
 	printf("Total bill %f\n", sum);
 	

@@ -1,7 +1,6 @@
 #include<stdio.h>
 
-int main()
-{
+int main(){
 	int nX = 1;
 	int nY = 1;
 	nY = nX + 1; /* ok */

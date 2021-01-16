@@ -1,7 +1,6 @@
 #include <stdio.h>
 
-int main(void)
-{
+int main(void){
 	float f = 0xAA;
 	signed int i = 0xAA;
 	unsigned a = 0xAAu;

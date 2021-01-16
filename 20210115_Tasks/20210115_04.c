@@ -1,7 +1,6 @@
 #include <stdio.h>
 
-int main()
-{
+int main(){
 	int i;
 	char arrEscChar[] = { '\t', '\n', '\r', '\v', '\\', '\'', '\"', '\?', '\a', '\b', '\f' };
 

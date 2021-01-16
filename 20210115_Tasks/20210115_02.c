@@ -1,7 +1,6 @@
 #include <stdio.h>
 
-int main() 
-{
+int main() {
 	printf("Size of literal default integer %d\n",sizeof(3));
 	printf("Size of literal U: %ld\n", sizeof(3U));
 	printf("Size of literal I: %ld\n", sizeof(3I));

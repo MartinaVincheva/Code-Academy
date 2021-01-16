@@ -2,9 +2,7 @@
 
 extern int g_nValue; 
 	
-int main()
-{
-
+int main(){
 	printf("Global variable = %d\n", g_nValue);
 	
 	return 0;
