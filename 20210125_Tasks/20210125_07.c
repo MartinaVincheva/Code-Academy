@@ -4,19 +4,17 @@
 само входни редове, които са по дълги от 80 символа.*/
 #include <stdio.h>
 
-int getStringLenght(char str[]);
-
 int main(void) {
     char c;
     char str[256];
-    int i = 0;
+    int idx = 0;
 
-        while((c = getchar()) != EOF){
-            str[i++] = c; 
-        }
-        str[i] ='\0';
-        if ( i > 80 ){
-            printf("%s", str);
-        }
+    while((c = getchar()) != EOF){
+        str[idx++] = c; 
+    }
+    str[idx] ='\0';
+    if ( idx > 80 ){
+        printf("%s", str);
+    }
     return(0);
 }
