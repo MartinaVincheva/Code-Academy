@@ -6,25 +6,20 @@ s. Използвайте я, за да напишете програма, ко�
 
 int main(void){
     char c ;
-    char str[256];
-    char rts[256];
-    int i = 0;
-    int beg = 0;
-    int end = 0;
-
+    char str[256],rts[256];
+    int i, beg, end = 0;
+    
     while ((c = getchar()) != EOF){
         str[i] = c;
         ++i;
-    }
-    end = i -1;
+    } end = i -1;
 
-    for (beg;beg< i; beg ++){
+    for (beg = 0;beg< i; beg ++){
         rts[beg] = str[end];
         end--;
-    }
-    rts[beg] = '\0';
+    } rts[beg] = '\0';
 
-    printf("%s", rts);
+    printf("%s\n", rts);
 
     return 0;
 } 
