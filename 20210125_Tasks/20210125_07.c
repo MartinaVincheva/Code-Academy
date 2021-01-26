@@ -3,11 +3,14 @@
 клавиатурата, докато не подадете ЕОF(Ctrl+D). Текстът да отпечатва
 само входни редове, които са по дълги от 80 символа.*/
 #include <stdio.h>
+
+int getStringLenght(char str[]);
+
 int main(void) {
     int c;
     char str[256];
     int i = 0;
-  /*  while ( (c = getchar()) != EOF){ 
+    while ( (c = getchar()) != EOF){ 
              str[i] = c;
              i++;
             if ( c =='\n' && i >80 ){
@@ -17,6 +20,13 @@ int main(void) {
                 i=0;
             }
     } 
-    return(0);*/
+    return(0);
 }
+
+int getStringLenght(char str[]){
+    int counter = 0;
+    
+    while (str[counter] != '\0')
+         counter++;
+    return counter;
 }
