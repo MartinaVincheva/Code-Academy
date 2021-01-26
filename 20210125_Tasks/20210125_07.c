@@ -7,26 +7,16 @@
 int getStringLenght(char str[]);
 
 int main(void) {
-    int c;
+    char c;
     char str[256];
     int i = 0;
-    while ( (c = getchar()) != EOF){ 
-             str[i] = c;
-             i++;
-            if ( c =='\n' && i >80 ){
-                printf("%s", str);
-                i=0 ;
-            } else if( c =='n'){ 
-                i=0;
-            }
-    } 
-    return(0);
-}
 
-int getStringLenght(char str[]){
-    int counter = 0;
-    
-    while (str[counter] != '\0')
-         counter++;
-    return counter;
+        while((c = getchar()) != EOF){
+            str[i++] = c; 
+        }
+        str[i] ='\0';
+        if ( i > 80 ){
+            printf("%s", str);
+        }
+    return(0);
 }
