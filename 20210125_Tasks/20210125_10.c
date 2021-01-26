@@ -4,36 +4,27 @@ s. Използвайте я, за да напишете програма, ко�
 по ред.*/
 #include <stdio.h>
 
-/*const int strLen = 5;
-char str[] = "Hello";
-char rts[6];*/
-
-//	     0  1  2  3  4  5
-// str	[H][e][l][l][o][0]
-// rts	[o][l][l][e][H][0]
-
 int main(void){
     char c ;
     char str[256];
+    char rts[256];
     int i = 0;
+    int beg = 0;
+    int end = 0;
 
     while ((c = getchar()) != EOF){
         str[i] = c;
-        i++;
+        ++i;
     }
-    printf('%c', str);
+    end = i -1;
 
+    for (beg;beg< i; beg ++){
+        rts[beg] = str[end];
+        end--;
+    }
+    rts[beg] = '\0';
 
+    printf("%s", rts);
 
-	/*int i = 0, j = 5;
-	
-	rst[j--] = '\0';
-	rst[j--] = str[i++];
-	rst[j--] = str[i++];
-	rst[j--] = str[i++];
-	rst[j--] = str[i++];
-	rst[j--] = str[i++];
-	printf("\"%s\" -> \"%s\"\n", str, rts);
-	
-	return(0);*/
-}
+    return 0;
+} 
