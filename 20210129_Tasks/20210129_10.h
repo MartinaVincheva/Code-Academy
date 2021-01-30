@@ -1,3 +1,3 @@
-int f1(int a, int b);
-int f2(int a, int b);
+int NOK(int a, int b);
+int AbsoluteValue(int c, int d);
 int f3(int c);
