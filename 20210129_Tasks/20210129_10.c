@@ -12,7 +12,7 @@ b.      Използвайте втората си функция, за да о�
 #include "20210129_10.h"
 
 int main(void) {
-    unsigned int a, b, c, d;
+    unsigned int a, b;
 
 	printf("\nPlease enter decimal number for A : ");
     scanf("%d", &a);
@@ -20,26 +20,35 @@ int main(void) {
     scanf("%d", &b);
     printf("\nResult of NOK is : %d ", NOK(a, b));
 
-    printf("\nAbsolute value -5 = %d ", AbsoluteValue(c,d));
+    printf("\nAbsolute value of -5 = %.2f ", AbsoluteValue(-5));
+    printf("\nAbsolute value of 5 = %.2f ", AbsoluteValue(5));
+    printf("\nAbsolute value of -5.1 = %.2f ", AbsoluteValue(-5.1));
+    printf("\nAbsolute value of 5.2 = %.2f ", AbsoluteValue(5.2));
+
+    printf("\nSquare root of 2 is %.6f ", sqaureRoot(2));
+    printf("\nSquare root of -2 is %.6f ", sqaureRoot(-2));
 }
 
 int NOK(int a, int b) {
-    return (0 == b) ? a : NOK(b, a % 2) ;
-}
-int AbsoluteValue(int c, int d) {
-    int c= -5;
-    int d = -2.5;
-    int absolut;
-    if (c >=0){
-        return c;
-    } else {
-        absolut = c;
-        return absolut;
+    int i;
+
+    for (i = a < b ? b : a; i < a * b; i++) {
+        if (i % a == 0 && i % b == 0) {
+            return i;
+        }
     }
-
+    return a * b;
 }
 
-/*int f3(int c) {
-    return (c * c);
-}*/
+float AbsoluteValue(float num) {
+    return num < 0 ? -num : num;
+}
+
+float sqaureRoot(float num) {
+    if (num < 0) {
+        return(-1);
+    } else {
+        return(sqrt(num));
+    }
+}
 
