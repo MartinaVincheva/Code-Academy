@@ -5,7 +5,8 @@ int isLetter (char c) {
 }
 
 int main(){
-	char c = getchar();
+	 printf("Please enter leter or number:\n ");
+     char c = getchar();
 
     printf("You hit ");
     if (!isLetter(c)) {
