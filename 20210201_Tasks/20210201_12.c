@@ -6,15 +6,15 @@
 #include <string.h> 
 
 int main (void){    
-   char str [11]="0507080901";
-   char sym [11]="1234";
-   char *isym;
+   char s1 [11]="0507080901";
+   char s2 [11]="1234";
+   char *is2;
 
-   isym = strpbrk (str,sym);
+   is2 = strpbrk (s1, s2);
 
-   if ( isym == NULL)
+   if ( is2 == NULL)
       printf ("There is no matched symbol.\n");
    else
-      printf ("Matched symbol is on position: %d .\n",isym-str+1);
+      printf ("Matched symbol is on position: %d .\n",is2-s1+1);
    return 0;
 }
