@@ -16,19 +16,19 @@ double atof(char *s){
     double a, power;
     int i = 0;
 
-    for( a = 0.0; isdigit(s[i]); i++) /* Sum the numbers from the string and multiply with 10 */
+    for( a = 0.0; isdigit(s[i]); i++) 
         a = 10.0 * a +(s[i]-'0');
     if(s[i] == '.')
         i++;
-    for(power = 1.0; isdigit(s[i]); i++){ /* Sum the numbers from the string after . and multiply with 10 each time*/
+    for(power = 1.0; isdigit(s[i]); i++){ 
         a = 10.0 * a + (s[i]-'0');
         power = power*10; 
     }  
-    return a/power; /*devide by 10 to receive the real number*/ 
+    return a/power; 
 }
 
 int main(void) {
-    char s[] = "-123456789";
+    char s[] = "123456789";
 
     printf("%f", atof(s));
     return 0;
