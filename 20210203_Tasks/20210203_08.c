@@ -10,12 +10,31 @@
 Принтирайте на екрана всички елементи на масива.*/
 #include <stdio.h>
 
+void printArray(int * array, int arraySize){
+    int i = 0;
+
+    for (i = 0; i < arraySize; i++) {
+        printf("%d ", array[i]);
+    }
+    printf("\n");
+}
+
 int main() {
-    int arrInt[11]= {100,90,80,70,60,50,40,30,20,10};
-    int * p;
-
+    int arrInt[10]= {100,90,80,70,60,50,40,30,20,10};
+    int * p = arrInt;
     
-
+/*  *(p + 2) = 5;
+    *(p + 3) = 33;
+    *(p + 4) -= 7;
+    *(p + 6) += 10;
+    *(p + 9) *= 3;  */
+    arrInt[2] = 5;
+    arrInt[3] = 33;
+    arrInt[4] -= 7;
+    arrInt[6] += 10;
+    arrInt[9] *= 3;
+    
+    printArray(arrInt, sizeof(arrInt) / sizeof(int));
     return 0;
 }
 
