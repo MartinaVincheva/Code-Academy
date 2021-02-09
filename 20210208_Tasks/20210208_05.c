@@ -118,9 +118,8 @@ int main() {
     char x, y;
 
     srand(time(NULL));
-    getRandomLocation(&x, &y);
-    rand() % 10 + 1;
     clearArray(arr1, arrayW, arrayH);
+    getRandomLocation(&x, &y);
     walkArray(arr1, arrayW, arrayH, x, y);
     printArray(arr1, arrayW, arrayH);
 
