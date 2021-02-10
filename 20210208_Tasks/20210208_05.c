@@ -60,57 +60,70 @@ char getRandomDirection(void) {
 }
 
 int isUpAllowed(char arr[arrayW][arrayH], char x, char y) {
-    return ((y - 1) >= 0) && ((arr[x][y - 1]) == '.');
+    return ((y - 1) >= 0) && (arr[x][y - 1] == '.');
 }
 
 int isRightAllowed(char arr[arrayW][arrayH], char arrW, char x, char y) {
-    return ((x + 1) < arrW) && ((arr[x + 1][y]) == '.');
+    return ((x + 1) < arrW) && (arr[x + 1][y] == '.');
 }
 
 int isDownAllowed(char arr[arrayW][arrayH], char arrH, char x, char y) {
-    return ((y + 1) < arrH) && ((arr[x][y + 1]) == '.');
+    return ((y + 1) < arrH) && (arr[x][y + 1] == '.');
 }
 
 int isLeftAllowed(char arr[arrayW][arrayH], char x, char y) {
-    return ((x - 1) >= 0) && ((arr[x - 1][y]) == '.');
+    return ((x - 1) >= 0) && (arr[x - 1][y] == '.');
 }
 
 void walkArray(char arr[arrayW][arrayH], char arrW, char arrH, char x, char y) {
     char direction;
+    char upChecked = 0, rightChecked = 0, downChecked = 0, leftChecked = 0;
 
     do {
         direction = getRandomDirection();
         switch(direction) {
             case UP_DIR:
-                if (isUpAllowed(arr, x, y)) {
+                if (!upChecked && isUpAllowed(arr, x, y)) {
                     // Move up
                     y--;
                     arr[x][y] = currentLetter++;
+                    rightChecked = 0, downChecked = 0, leftChecked = 0;
+                } else {
+                    upChecked = 1;
                 }
             break;
             case RIGHT_DIR:
-                if (isRightAllowed(arr, arrW, x, y)) {
+                if (!rightChecked && isRightAllowed(arr, arrW, x, y)) {
                     // Move right
                     x++;
                     arr[x][y] = currentLetter++;
+                    upChecked = 0, downChecked = 0, leftChecked = 0;
+                } else {
+                    rightChecked = 1;
                 }
             break;
             case DOWN_DIR:
-                if (isDownAllowed(arr, arrH, x, y)) {
+                if (!downChecked && isDownAllowed(arr, arrH, x, y)) {
                     // Move down
                     y++;
                     arr[x][y] = currentLetter++;
+                    upChecked = 0, rightChecked = 0, leftChecked = 0;
+                } else {
+                    downChecked = 1;
                 }
             break;
             case LEFT_DIR:
-                if (isLeftAllowed(arr, x, y)) {
+                if (!leftChecked && isLeftAllowed(arr, x, y)) {
                     // Move left
                     x--;
                     arr[x][y] = currentLetter++;
+                    upChecked = 0, rightChecked = 0, downChecked = 0;
+                } else {
+                    leftChecked = 1;
                 }
             break;
         }
-    } while (currentLetter <= 'Z');
+    } while ((currentLetter <= 'Z') && !(upChecked && rightChecked && downChecked && leftChecked));
 }
 
 
@@ -122,7 +135,6 @@ int main() {
     getRandomLocation(&x, &y);
     walkArray(arr1, arrayW, arrayH, x, y);
     printArray(arr1, arrayW, arrayH);
-
     return 0;
 }
 
