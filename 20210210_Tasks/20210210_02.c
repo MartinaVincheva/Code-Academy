@@ -16,18 +16,22 @@ void reverse(char *arr1, int size)
     int i = 0;
     p = arr1;
 
-    while ((c = getchar()) != '\n'){
+    while ((c = getchar()) != '\n')
+    {
         arr1[i] = c;
         i++;
-        p++;    
-    } while (i > 0){
+        p++;
+    }
+    while (i > 0)
+    {
         --p;
         putchar(*p);
         i--;
     }
 }
 
-int main(){
+int main()
+{
     char arr1[ARR_SIZE];
     printf("Please enter your text : \n");
     reverse(arr1, ARR_SIZE);
