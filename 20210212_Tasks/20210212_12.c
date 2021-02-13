@@ -11,15 +11,43 @@ int participantAges[MAX_PARTICIPANTS];
 
 void sortParticipants(int count)
 {
-    int tempPartNumber;
-    char *tempPartFirstName;
-    char *tempPartLastName;
-    int tempPartAge;
+    int tempInt;
+    char *tempCharPtr;
 
     for (int i = 0; i < allParticipants - 1; i++)
     {
-        for (int j = i; j < allParticipants; j++)
+        for (int j = i + 1; j < allParticipants; j++)
         {
+            if (strcmp(participantFirstNames[i], participantFirstNames[j]) > 0)
+            {
+                tempCharPtr = participantFirstNames[j];
+                participantFirstNames[j] = participantFirstNames[i];
+                participantFirstNames[i] = tempCharPtr;
+                tempCharPtr = participantLastNames[j];
+                participantLastNames[j] = participantLastNames[i];
+                participantLastNames[i] = tempCharPtr;
+                tempInt = participantNumbers[j];
+                participantNumbers[j] = participantNumbers[i];
+                participantNumbers[i] = tempInt;
+                tempInt = participantAges[j];
+                participantAges[j] = participantAges[i];
+                participantAges[i] = tempInt;
+            }
+            if (strcmp(participantLastNames[i], participantLastNames[j]) > 0)
+            {
+                tempCharPtr = participantFirstNames[j];
+                participantFirstNames[j] = participantFirstNames[i];
+                participantFirstNames[i] = tempCharPtr;
+                tempCharPtr = participantLastNames[j];
+                participantLastNames[j] = participantLastNames[i];
+                participantLastNames[i] = tempCharPtr;
+                tempInt = participantNumbers[j];
+                participantNumbers[j] = participantNumbers[i];
+                participantNumbers[i] = tempInt;
+                tempInt = participantAges[j];
+                participantAges[j] = participantAges[i];
+                participantAges[i] = tempInt;
+            }
         }
     }
 }
@@ -43,10 +71,11 @@ int main()
         participantLastNames[count] = malloc(strlen(lastName) + 1);
         strcpy(participantLastNames[count], lastName);
     }
+    printf("\n");
     sortParticipants(allParticipants);
     for (count = 0; count < allParticipants; count++)
     {
-        printf("Participant %d, %s %s, age %d, number %d\n", count, participantFirstNames[count], participantLastNames[count], participantAges[count], participantNumbers[count]);
+        printf("Participant %d,names %s %s, age %d, number %d\n", count, participantFirstNames[count], participantLastNames[count], participantAges[count], participantNumbers[count]);
         free(participantFirstNames[count]);
         free(participantLastNames[count]);
     }
