@@ -6,11 +6,11 @@
 стринга , от който копираме , и какво да се случва тогава*/
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
+#include <math.h>
 
-void copyBackwardString(char *to, char *from)
+void mystrncpy(char *to, char *from, int size)
 {
-    int toLen = strlen(to), fromLen = strlen(from), copyLen = min(toLen, fromLen);
+    int fromLen = strlen(from), copyLen = fmin(size - 1, fromLen);
 
     to += copyLen;
     *to = '\0';
@@ -26,11 +26,11 @@ int main()
 {
     char str1[] = "Nice to see you!";
     char str3[] = "How are you?";
-    char str2[17], str4[13];
+    char str2[8], str4[13];
 
-    copyBackwardString(str1, str2);
-    printf("Copied str1 in empty str2 is % s\n", str2);
-    copyBackwardString(str3, str4);
+    mystrncpy(str2, str1, sizeof(str2));
+    printf("Copied str1 in empty str2 with lower size is % s\n", str2);
+    mystrncpy(str4, str3, sizeof(str4));
     printf("Copied str3 in empty str4 is %s\n", str4);
     return 0;
 }
