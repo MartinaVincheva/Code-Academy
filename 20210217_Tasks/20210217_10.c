@@ -5,26 +5,31 @@
 Например 5 е просто, защото се дели единствено на 1 и 5, докато 6 не
 е, защото се дели освен на 1 и 6, и на 2 и 3. */
 #include <stdio.h>
+#include <stdlib.h>
+
+#define arrSize 1000
 
 int main()
 {
-    int primes[1000];
-    int i, j;
+    unsigned int i, j;
+    int primeNumbers[arrSize];
 
-    primes[0] = 0;
-    primes[1] = 1;
-    for (int i = 0; i <= 1000; i++)
+    for (i = 2; i < arrSize; i++)
+        primeNumbers[i] = 1;
+
+    for (i = 2; i < arrSize; i++)
     {
-        if (primes[i] == 1)
+        if (primeNumbers[i])
         {
-            for (j = 2; i * j <= 1000; j++)
-            {
-                primes[i * j] = 0;
-            }
+            for (j = i; i * j < arrSize; j++)
+                primeNumbers[i * j] = 0;
         }
     }
-
-
-
+    printf("\nPrime numbers from 1 to 1000 are: \n");
+    for (i = 2; i < arrSize; i++)
+    {
+        if (primeNumbers[i])
+            printf("%d\n", i);
+    }
     return 0;
 }
