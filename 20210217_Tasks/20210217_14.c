@@ -4,22 +4,48 @@
 #include <stdio.h>
 #include <string.h>
 
-int our_strcmp(char *s, char *t)
+int compare(char *s, char *t)
 {
-    int res = strcmp(s, t);
-    return res;
+    char *temp = s;
+
+    while (*s)
+    {
+        char *p = t;
+        while (*p && *s != *p)
+        {
+            p++;
+        }
+        if (*p == '\0')
+            return 0;
+        s++;
+    }
+    while (*t)
+    {
+        char *p = temp;
+        while (*p && *t != *p)
+        {
+            p++;
+        }
+        if (*p == '\0')
+            return 0;
+        t++;
+    }
+
+    return 1;
 }
+
 int main(void)
 {
-    char s[] = "abc";
-    char t[] = "cba";
-    int res = our_strcmp(s, t);
+    char s[] = "dabc";
+    char t[] = "abcd";
+    int (*comp)(char *, char *) = &compare;
+    int res = comp(s, t);
 
-    if (res == 0)
+    if (res == 1)
         printf("Those two strings are anagrams, result %d \n", res);
 
     else
-        printf("Those two strings are not anagrams one of them is longer, result %d \n", res);
+        printf("Those two strings are not anagrams, result %d \n", res);
 
     return 0;
 }
