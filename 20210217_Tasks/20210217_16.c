@@ -6,8 +6,66 @@
 слагане в масива /цикъл и проверка./*/
 #include <stdio.h>
 
-int main(void)
-{
+void merge(int[], int, int[], int, int[]);
 
+int main()
+{
+    int a[88] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                 -1, -2, -3, -4, -5, -6, -7, -8, -9, -10, -11, -12, -13, -14, -15, -16, -17, -18, -19, -20};
+    int b[88] = {100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120,
+                 -100, -101, -102, -103, -104, -105, -106, -107, -108, -109, -110, -111, -112, -113, -114, -115, -116, -117, -118, -119, -120};
+    int m, n, c, sorted[176];
+
+    merge(a, m, b, n, sorted);
+
+    printf("Sorted array:\n");
+
+    for (c = 0; c < m + n; c++)
+    {
+        printf("%d\n", sorted[c]);
+    }
     return 0;
+}
+
+void merge(int a[], int m, int b[], int n, int sorted[])
+{
+    int i, j, k;
+
+    j = k = 0;
+
+    for (i = 0; i < m + n;)
+    {
+        if (j < m && k < n)
+        {
+            if (a[j] < b[k])
+            {
+                sorted[i] = a[j];
+                j++;
+            }
+            else
+            {
+                sorted[i] = b[k];
+                k++;
+            }
+            i++;
+        }
+        else if (j == m)
+        {
+            for (; i < m + n;)
+            {
+                sorted[i] = b[k];
+                k++;
+                i++;
+            }
+        }
+        else
+        {
+            for (; i < m + n;)
+            {
+                sorted[i] = a[j];
+                j++;
+                i++;
+            }
+        }
+    }
 }
