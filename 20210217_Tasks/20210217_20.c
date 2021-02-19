@@ -56,7 +56,7 @@ int main(void)
     push(5);
     push(6);
     push(7);
-    printf("Top %d\n", top());
+    printf("Element at top of the stack: %d\n", top());
     printf("%d\n", pop());
     printf("%d\n", pop());
     printf("%d\n", pop());
