@@ -17,10 +17,11 @@ void totalizator(int choice)
     {
         int min = 5;
         int max = 35;
+        printf("Your random numbers are :");
         for (int i = 0; i < min; i++)
         {
             n = (rand() % (max - min + 1)) + min;
-            printf("Your random numbers are : %d ", n);
+            printf(" %d, ", n);
         }
         printf("\n");
     }
@@ -28,10 +29,11 @@ void totalizator(int choice)
     {
         int min = 6;
         int max = 42;
+        printf("Your random numbers are :");
         for (int i = 0; i < min; i++)
         {
             n = (rand() % (max - min + 1)) + min;
-            printf("Your random numbers are : %d ", n);
+            printf(" %d, ", n);
         }
         printf("\n");
     }
@@ -39,10 +41,11 @@ void totalizator(int choice)
     {
         int min = 6;
         int max = 49;
+        printf("Your random numbers are :");
         for (int i = 0; i < min; i++)
         {
             n = (rand() % (max - min + 1)) + min;
-            printf("Your random numbers are : %d ", n);
+            printf(" %d, ", n);
         }
         printf("\n");
     }

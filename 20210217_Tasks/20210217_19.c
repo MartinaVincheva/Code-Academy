@@ -4,75 +4,49 @@ int pop()
 void push()
 int top()
 int isFull() */
-#include <limits.h>
 #include <stdio.h>
-#include <stdlib.h>
 
-/* A structure to represent a stack */
-struct Stack
-{
-    int top;
-    unsigned capacity;
-    int *array;
-};
+#define STACK_SIZE 16
+int stack[STACK_SIZE];
+int stackTop = STACK_SIZE;
 
-/*function to create a stack of given capacity. It initializes size of stack as 0*/
-struct Stack *createStack(unsigned capacity)
+int isEmpty(void)
 {
-    struct Stack *stack = (struct Stack *)malloc(sizeof(struct Stack));
-    stack->capacity = capacity;
-    stack->top = -1;
-    stack->array = (int *)malloc(stack->capacity * sizeof(int));
-    return stack;
+    return (stackTop == STACK_SIZE);
 }
 
-/* Stack is full when top is equal to the last index */
-int isFull(struct Stack *stack)
+int pop(void)
 {
-    return stack->top == stack->capacity - 1;
+    if (!isEmpty())
+    {
+        int temp = stack[stackTop];
+        stackTop++;
+        return (temp);
+    }
+    return (-1);
 }
 
-/* Stack is empty when top is equal to -1 */
-int isEmpty(struct Stack *stack)
+int isFull(void)
 {
-    return stack->top == -1;
+    return (stackTop == 0);
 }
 
-/*Function to add an item to stack.  It increases top by 1 */
-void push(struct Stack *stack, int item)
+void push(int data)
 {
-    if (isFull(stack))
-        return;
-    stack->array[++stack->top] = item;
-    printf("%d pushed to stack\n", item);
+    if (!isFull())
+    {
+        stack[stackTop - 1] = data;
+        stackTop--;
+    }
 }
 
-/* Function to remove an item from stack.  It decreases top by 1*/
-int pop(struct Stack *stack)
+int main(void)
 {
-    if (isEmpty(stack))
-        return INT_MIN;
-    return stack->array[stack->top--];
-}
-
-/* Function to return the top from stack without removing it */
-int peek(struct Stack *stack)
-{
-    if (isEmpty(stack))
-        return INT_MIN;
-    return stack->array[stack->top];
-}
-
-/* Driver program to test above functions */
-int main()
-{
-    struct Stack *stack = createStack(100);
-
-    push(stack, 10);
-    push(stack, 20);
-    push(stack, 30);
-
-    printf("%d popped from stack\n", pop(stack));
-
+    push(5);
+    push(6);
+    push(7);
+    printf("%d\n", pop());
+    printf("%d\n", pop());
+    printf("%d\n", pop());
     return 0;
 }

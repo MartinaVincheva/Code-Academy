@@ -27,8 +27,9 @@ int main()
 {
     char arr1[ARR_SIZE];
     void (*rev)(char *, int) = &reverse;
-    printf("Please enter your text : \n");
+    printf("Please enter your text : ");
     rev(arr1, ARR_SIZE);
+    printf(" is your reversed text . ");
     printf("\n");
     return 0;
 }
