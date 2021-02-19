@@ -35,10 +35,12 @@ int main()
     int arrInt[5][5];
     int *p = (int *)arrInt;
     int size = sizeof(arrInt) / sizeof(int);
+    void (*Value)(int arrInt[5][5]) = &findValue;
+    int *(*randNumb)(int arr[5][5], int) = &valueOfRandNumbers;
     srand(time(NULL));
-    p = valueOfRandNumbers(arrInt, size);
+    p = randNumb(arrInt, size);
     printf("\n");
-    findValue(arrInt);
+    Value(arrInt);
 
     return 0;
 }
