@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int *createArray(int uNumOfElem)
+int *createArray(int NumOfElem)
 {
     return malloc(NumOfElem * sizeof(int));
 }

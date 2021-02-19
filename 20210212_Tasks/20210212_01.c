@@ -23,5 +23,6 @@ int main()
         sum += *(p + i);
     }
     printf("The sum is : %d\n", sum);
+    free(p);
     return 0;
 }
