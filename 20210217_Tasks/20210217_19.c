@@ -1,9 +1,9 @@
-/*Задача19. Напишете програма, която да създаде стек (LIFO) от 16 елемента, който
+/* Задача19. Напишете програма, която да създаде стек (LIFO) от 16 елемента, който
 има следното API
 int pop()
 void push()
 int top()
-int isFull()*/
+int isFull() */
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
