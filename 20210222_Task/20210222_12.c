@@ -14,19 +14,20 @@ CType2 m_bitField2 : M;
 големината на структурата?
 Опитайте същото с препроцесор #pragma pack(1).*/
 #include <stdio.h>
+#pragma pack(1)
 
 struct My_StructType
 {
-    char letter : 6;
-    short int Inum : 3;
+    char letter;
+    short int Inum;
 
 } my_structA;
 struct My_StructType1
 {
-    char letter1 : 6;
-    char letter2 : 6;
-    short int Inum1 : 3;
-    short int Inum2 : 3;
+    char letter1;
+    char letter2;
+    short int Inum1;
+    short int Inum2;
 
 } my_structB;
 int main()
@@ -34,7 +35,7 @@ int main()
     struct My_StructType *AStruct = &my_structA;
     AStruct->Inum = 7;
     AStruct->letter = 'c';
-    printf("Letter: %d, short int: %d, Size of My_Struct: %d\n", my_structA.letter, my_structA.Inum, sizeof(my_structA)); /*only with 3 bits for short int we can print positive numbers from 1 to 3,
+    printf("Letter: %c, short int: %d, Size of My_Struct: %d\n", my_structA.letter, my_structA.Inum, sizeof(my_structA)); /*only with 3 bits for short int we can print positive numbers from 1 to 3,
     and with 6 bits for char we can't print any letter, that's why we receive negative number for it */
     my_structB.letter1 = 'Z';
     my_structB.letter2 = 'F';
