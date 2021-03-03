@@ -19,119 +19,104 @@
 #include <time.h>
 
 #define STACK 37
-#define MELLON_SORT 0
-#define PUMPKIN_SORT 1
+#define MELLONSORT 0
+#define PUMKINSORT 1
 #define PI 3.14
 
 typedef struct
 {
     int diameter;
-    float crustWidth;
+    float crustwidth;
 } watermellon;
 
-void randomMellonMetrics(watermellon *stack, int sort);
-void fillStack(watermellon *stack, int sort);
-void printStack(watermellon *stack);
-float getAverageDiameter(watermellon *stack);
-float getAverageCrustWidth(watermellon *stack);
-float sphereVolume(float diameter);
-void printMetrics(watermellon *stack);
+void RandomMelonMetrics(watermellon *stack, int sort);
+void FillStack(watermellon *stack, int sort);
+float GetAvarageDiameter(watermellon *stack);
+float GetAvarageCrustWidth(watermellon *stack);
+float SphereVolume(float diameter);
+void PrintMetrcis(watermellon *stack);
 
 int main()
 {
     srand(time(0));
-    watermellon *stackA = (watermellon *)malloc(STACK * sizeof(watermellon));
+    watermellon *stackA = (watermellon *)malloc(STACK * (sizeof(watermellon)));
     if (NULL == stackA)
     {
         printf("Memory allocation error!\n");
         exit(1);
     }
-    watermellon *stackB = (watermellon *)malloc(STACK * sizeof(watermellon));
+    watermellon *stackB = (watermellon *)malloc(STACK * (sizeof(watermellon)));
     if (NULL == stackB)
     {
         printf("Memory allocation error!\n");
         exit(2);
     }
 
-    fillStack(stackA, MELLON_SORT);
-    fillStack(stackB, PUMPKIN_SORT);
-
-    printf("Stack A(Mellon Sort):\n");
-    printMetrics(stackA);
-    printf("Stack B(Pumpkin Sort):\n");
-    printMetrics(stackB);
-
+    FillStack(stackA, MELLONSORT);
+    FillStack(stackB, PUMKINSORT);
+    printf("StackA (mellonsort) : \n");
+    PrintMetrcis(stackA);
+    printf("StackB (pumkin) : \n");
+    PrintMetrcis(stackB);
     free(stackA);
     stackA = NULL;
     free(stackB);
     stackB = NULL;
-
     return 0;
 }
 
-void randomMellonMetrics(watermellon *stack, int sort)
+void RandomMelonMetrics(watermellon *stack, int sort)
 {
     if (sort == 0)
     {
         stack->diameter = ((rand() % 125) + 15);
-        stack->crustWidth = (((float)rand() / RAND_MAX) * (0.5 - 3.5) + 3.5);
+        stack->crustwidth = (((float)rand() / RAND_MAX) * (0.5 - 3.5) + 3.5);
     }
     if (sort == 1)
     {
-        stack->diameter = (rand() % 60) + 35;
-        stack->crustWidth = (((float)rand() / RAND_MAX) * (0.3 - 0.9) + 0.9);
+        stack->diameter = ((rand() % 60) + 35);
+        stack->crustwidth = (((float)rand() / RAND_MAX) * (0.3 - 0.9) + 0.9);
     }
 }
-
-void fillStack(watermellon *stack, int sort)
+void FillStack(watermellon *stack, int sort)
 {
     for (int i = 0; i < STACK; i++)
     {
-        randomMellonMetrics((stack + i), sort);
+        RandomMelonMetrics((stack + i), sort);
     }
 }
 
-float getAverageDiameter(watermellon *stack)
+float GetAvarageDiameter(watermellon *stack)
 {
-    float averageDiameter = 0.0;
+    float AvgDiam = 0.0;
     for (int i = 0; i < STACK; i++)
     {
-        averageDiameter += stack[i].diameter / STACK;
+        AvgDiam += stack[i].diameter / STACK;
     }
-    return averageDiameter;
+    return AvgDiam;
 }
-
-float getAverageCrustWidth(watermellon *stack)
+float GetAvarageCrustWidth(watermellon *stack)
 {
-    float averageCrustWidth = 0.0;
+
+    float AvgCRWdth = 0.0;
     for (int i = 0; i < STACK; i++)
     {
-        averageCrustWidth += stack[i].crustWidth / STACK;
+        AvgCRWdth += stack[i].crustwidth / STACK;
     }
-    return averageCrustWidth;
+    return AvgCRWdth;
 }
-
-float sphereVolume(float diameter)
+float SphereVolume(float diameter)
 {
-    float r = diameter / 2;
-    return (4 / 3) * (PI * r * r * r);
+    float radius = diameter / 2;
+    return (4 / 3) * (PI * radius * radius * radius);
 }
-
-void printStack(watermellon *stack)
+void PrintMetrcis(watermellon *stack)
 {
-    for (int i = 0; i < STACK; i++)
-    {
-        printf("D: %d, Cw:%.2f\n", stack[i].diameter, stack[i].crustWidth);
-    }
-}
-
-void printMetrics(watermellon *stack)
-{
-    float averageDiameter, averageCrustWidth;
-
-    averageDiameter = getAverageDiameter(stack);
-    averageCrustWidth = getAverageCrustWidth(stack);
-    printf("Avegage diameter of the stack is: %.2f\n", averageDiameter);
-    printf("Average crust width of the stack is: %.2f\n", averageCrustWidth);
-    printf("Average volume of the edible part of a mellon from the stack is: %.2fsm3\n\n", sphereVolume((averageDiameter - (2 * averageCrustWidth))));
+    float avgDimeter;
+    float avgWidth;
+    avgDimeter = GetAvarageDiameter(stack);
+    avgWidth = GetAvarageCrustWidth(stack);
+    printf("Avarage diameter of the stack is :%.2f\n", avgDimeter);
+    printf("Avarage crust width is %.2f\n", avgWidth);
+    printf("Avarage volume of the edible part of the Melons in the stack : %.2f\n", SphereVolume((avgDimeter - 2 * (avgWidth))));
 }
