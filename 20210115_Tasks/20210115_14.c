@@ -2,18 +2,20 @@
 
 extern int myVar;
 
-void test(void){
-	myVar++;
+void test(void)
+{
+    myVar++;
 }
 
-int main(void){
-	test();
-	test();
-	test();
-	
-	printf("%d\n", myVar);
+int main(void)
+{
+    test();
+    test();
+    test();
 
-	return 0;
+    printf("%d\n", myVar);
+
+    return 0;
 }
 
 int myVar = 0;

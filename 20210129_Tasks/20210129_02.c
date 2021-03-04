@@ -6,21 +6,22 @@ const float PI = 3.14;
 float areaOfCircle(float radius);
 float area();
 
-float areaOfCircle(float radius){
-    
-    return PI *( radius * radius);
+float areaOfCircle(float radius)
+{
+    return PI * (radius * radius);
 }
-float area(){
+float area()
+{
     float radius;
     printf("Please enter radius for the circle!\n");
     scanf(" %f", &radius);
     return areaOfCircle(radius);
 }
 
-int main() {
+int main()
+{
     float circle = area();
     printf("Area of circle with radius which you declare is %f\n", circle);
-	
-	return 0;
-}
 
+    return 0;
+}
