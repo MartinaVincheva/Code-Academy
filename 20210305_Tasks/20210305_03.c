@@ -61,5 +61,7 @@ int main()
                hutVihren->height, hutVihren->temperature, peakVihren->height, peakVihren->temperature);
     }
 
+    free(hutVihren);
+    free(peakVihren);
     return 0;
 }
