@@ -145,22 +145,49 @@ void sum_w_v(parcel *parcels, int count)
 {
     float totalWeight = 0, weightPrice = 0;
     float totalVolume = 0, volumePrice = 0;
+    float sumOneByOneWeight = 0, sumOneByOneVolume = 0;
+    float total = 0;
+    int confirmation;
 
     for (int i = 0; i < count; i++)
     {
         totalWeight += parcels[i].weight;
         totalVolume += parcels[i].volume;
+        sumOneByOneWeight = parcels[i].weight;
+        sumOneByOneVolume = parcels[i].volume;
+        total += getPriceForWeight(sumOneByOneWeight) + getPriceForVolume(sumOneByOneVolume);
     }
     weightPrice = getPriceForWeight(totalWeight);
     volumePrice = weightPrice + getPriceForVolume(totalVolume);
-    printf("Total Weight of all packages is: %f grams,\nTotal Volume of all packages is: %f cm,\nTotal price is %f leva\n", totalWeight, totalVolume, volumePrice);
-    if (weightPrice < volumePrice)
+
+    printf("Total Weight of all packages is: %f grams,\nTotal Volume of all packages is: %f cm.\n", totalWeight, totalVolume);
+    if (volumePrice < total)
     {
-        printf("It is cheaper to send all your parcels united in one pack.\n")
+        printf("It is cheaper to send all your parcels united in one pack. It will cost you in total %f leva\n", volumePrice);
+        printf("Please press '1' if you are agree , and '2' if you are not:\n");
+        scanf("%d", &confirmation);
+        if (1 == confirmation)
+        {
+            printf("Thank you! Your parcels will be send as one at total price of %f leva\n", volumePrice);
+        }
+        else
+        {
+            printf("Ok, than your parcels will be send one by one at price of %f leva\n", total);
+        }
     }
     else
     {
-        printf("It is cheaper to send all your parcels one by one.\n")
+        printf("It is cheaper to send all your parcels one by one.It will cost you in total %f leva\n", total);
+        printf("Please press '1' if you are agree , and '2' if you are not:\n");
+        scanf("%d", &confirmation);
+        if (1 == confirmation)
+        {
+            printf("Thank you! Your parcels will be send one by one at total price of %f leva\n", total);
+        }
+        else
+        {
+            printf("Ok, than your parcels will be send as one at price of %f leva\n", volumePrice);
+        }
     }
 }
 
