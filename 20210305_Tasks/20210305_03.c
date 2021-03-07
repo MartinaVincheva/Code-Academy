@@ -13,13 +13,33 @@
 н.м.р.) е ... ºC , то температурата на хижа Вихрен (1950м н.м.р.) е ... ºC.
 Потребителски типове упражнение. */
 #include <stdio.h>
+#include <stdlib.h>
+
+typedef struct
+{
+    float temperature;
+    int height;
+} pointOfinterest;
+
+void calculateTemp(pointOfinterest *known, pointOfinterest *unknown)
+{
+    if (known->height > unknown->height)
+    {
+        unknown->temperature = known->temperature + (known->height - unknown->height) * 0.005;
+    }
+    else
+    {
+        unknown->temperature = known->temperature - (unknown->height - known->height) * 0.005;
+    }
+}
 
 int main()
 {
-    float tempHutVihren;
-    float tempPeakVihren;
-    int hightHutVihren = 1950;
-    int hightPeakVihren = 2918;
+    pointOfinterest *hutVihren = malloc(sizeof(pointOfinterest));
+    pointOfinterest *peakVihren = malloc(sizeof(pointOfinterest));
+
+    hutVihren->height = 1950;
+    peakVihren->height = 2918;
     int choice;
 
     printf("Welcome!\nIf you want to know what is the temp at Peak Vihren, press 1\nIf you want to know what is the temp at Hut Vihren, press 2\n");
@@ -27,14 +47,19 @@ int main()
     if (1 == choice)
     {
         printf("Please enter temp at Hut Vihren:");
-        scanf("%f", &tempHutVihren);
-        printf("Atmosphere presure is normal and temp at Peak Vihren is %.2f°C and temp at Hut Vihren is %.2f°C\n", tempHutVihren - (hightPeakVihren - hightHutVihren) * 0.005, tempHutVihren);
+        scanf("%f", &hutVihren->temperature);
+        calculateTemp(hutVihren, peakVihren);
+        printf("Atmosphere presure is normal and temp at Peak Vihren(%dm) is %.2f°C and temp at Hut Vihren(%dm) is %.2f°C\n",
+               peakVihren->height, peakVihren->temperature, hutVihren->height, hutVihren->temperature);
     }
     else
     {
         printf("Please enter temp at Peak Vihren:");
-        scanf("%f", &tempPeakVihren);
-        printf("Atmosphere presure is normal and temp at Hut Vihrenis %.2f°C and temp at Peak Vihren  is %.2f°C\n", tempPeakVihren + (hightPeakVihren - hightHutVihren) * 0.005, tempPeakVihren);
+        scanf("%f", &peakVihren->temperature);
+        calculateTemp(peakVihren, hutVihren);
+        printf("Atmosphere presure is normal and temp at Hut Vihren(%dm) is %.2f°C and temp at Peak Vihren(%dm) is %.2f°C\n",
+               hutVihren->height, hutVihren->temperature, peakVihren->height, peakVihren->temperature);
     }
+
     return 0;
 }
