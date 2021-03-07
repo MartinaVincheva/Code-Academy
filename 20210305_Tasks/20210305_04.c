@@ -14,7 +14,7 @@
 113342F */
 #include <stdio.h>
 
-const int labirint[7][7] = {{3, 3, 2, 4, 3, 1, 2}, {2, 4, 2, 3, 2, 4, 3}, {4, 2, 3, 2, 4, 2, 1}, {4, 4, 1, 2, 2, 3, 4}, {3, 2, 3, 3, 4, 2, 2}, {3, 2, 4, 2, 3, 2, 1}, {1, 1, 3, 3, 4, 2, 0}};
+const char labirint[7][7] = {{'3', '3', '2', '4', '3', '1', '2'}, {'2', '4', '2', '3', '2', '4', '3'}, {'4', '2', '3', '2', '4', '2', '1'}, {'4', '4', '1', '2', '2', '3', '4'}, {'3', '2', '3', '3', '4', '2', '2'}, {'3', '2', '4', '2', '3', '2', '1'}, {'1', '1', '3', '3', '4', '2', 'F'}};
 
 int x = 0, y = 0, oldX = 0, oldY = 0;
 
@@ -31,7 +31,7 @@ void printLab(int x, int y)
             }
             else
             {
-                printf("%d", labirint[i][j]);
+                printf("%c", labirint[i][j]);
             }
         }
     }
@@ -42,31 +42,31 @@ void moves(int direction)
     switch (direction)
     {
     case 1:
-        if (y - labirint[y][x] >= 0)
+        if (y - labirint[y][x] - '0' >= 0)
         {
             oldY = y;
-            y -= labirint[y][x];
+            y -= labirint[y][x] - '0';
         }
         break;
     case 2:
-        if (x + labirint[y][x] < 7)
+        if (x + labirint[y][x] - '0' < 7)
         {
             oldX = x;
-            x += labirint[y][x];
+            x += labirint[y][x] - '0';
         }
         break;
     case 3:
-        if (y + labirint[y][x] < 7)
+        if (y + labirint[y][x] - '0' < 7)
         {
             oldY = y;
-            y += labirint[y][x];
+            y += labirint[y][x] - '0';
         }
         break;
     case 4:
-        if (x - labirint[y][x] >= 0)
+        if (x - labirint[y][x] - '0' >= 0)
         {
             oldX = x;
-            x -= labirint[y][x];
+            x -= labirint[y][x] - '0';
         }
         break;
     default:
@@ -74,38 +74,39 @@ void moves(int direction)
     }
 }
 
-void goBack()
+void movesBack()
 {
     x = oldX;
     y = oldY;
 }
 void playGame()
 {
-    unsigned input;
+    char input;
     int direction;
     printLab(x, y);
-    printf("You have %d moves\n", labirint[y][x]);
-    printf("For right press 1\nFor down press 2\nFor left press 3\nFor up press 4\nFor going back press 0\n");
-    scanf("%d", &input);
+    printf("Now you have %c moves in direction:\n", labirint[y][x]);
+    printf("For right press r\nFor down press d\nFor left press l\nFor up press u\nFor going back press b\n");
+    printf("Please enter direction which you want to go:\n");
+    scanf("%c", &input);
     switch (input)
     {
-    case '1':
+    case 'u':
         direction = 1;
         break;
-    case '2':
+    case 'r':
         direction = 2;
         break;
-    case '3':
+    case 'd':
         direction = 3;
         break;
-    case '4':
+    case 'l':
         direction = 4;
         break;
-    case '0':
-        goBack();
+    case 'b':
+        movesBack();
         break;
     default:
-        printf("Wrong input");
+        printf("***Wrong input!*** Please try again!\n");
         playGame();
         break;
     }
@@ -113,18 +114,19 @@ void playGame()
     moves(direction);
     if (x == 6 && y == 6)
     {
-        printf("***CONGRATULATIONS!*** YOU WIN!");
+        printf("***CONGRATULATIONS!*** YOU WIN!\n");
     }
     else
     {
+        printf("*************************\n");
         playGame();
     }
 }
 
 int main(void)
 {
-    printf("Welcome to Labirint game!\n Here is your start position:");
-    printLab(x, y);
+    printf("*************************\n");
+    printf("Welcome to Labirint game!\nHere is your start position:");
     playGame();
 
     return 0;
