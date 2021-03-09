@@ -16,7 +16,7 @@ int main()
     fputs("String new", fpt);
     fputs("\nString ", fpt);
     long fpos = ftell(fpt);
-    printf("position : %ld\n", fpos);
+    printf("position : %ld it Bytes\n", fpos);
     fclose(fpt);
     return 0;
 }

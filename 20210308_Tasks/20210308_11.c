@@ -11,10 +11,16 @@ int main()
 {
     FILE *fpt = NULL;
     fpos_t pos;
-    fpt = fopen("C:\\Users\\Marti\\codeAcademy\\gitRepo\\Code-Academy\\20210308_Tasks\\test8.txt", "wt");
-    fgetpos(fpt, &pos);
-    fputs("\nString ", fpt);
-    printf("%d\n", pos);
+    fpt = fopen("C:\\Users\\Marti\\codeAcademy\\gitRepo\\Code-Academy\\20210308_Tasks\\test8.txt", "w");
+    int result = fgetpos(fpt, &pos);
+    if (0 == result)
+    {
+        printf("Position : %d Bytes\n", pos);
+    }
+    else
+    {
+        printf("Error\n");
+    }
     fclose(fpt);
     return 0;
 }
