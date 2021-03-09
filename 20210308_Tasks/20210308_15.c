@@ -16,6 +16,7 @@ int main()
     {
         fseek(fpt, 0, SEEK_END);
         pos = ftell(fpt);
+
         while (i <= pos)
         {
             printf("%c", fgetc(fpt));
