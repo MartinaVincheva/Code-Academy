@@ -7,6 +7,28 @@
 
 int main()
 {
+    FILE *fpt = NULL;
+    long pos, i = 0;
 
+    fpt = fopen("C:\\Users\\Marti\\codeAcademy\\gitRepo\\Code-Academy\\20210308_Tasks\\file14.txt", "r");
+
+    if (fpt != NULL)
+    {
+        fseek(fpt, 0, SEEK_END);
+        pos = ftell(fpt);
+        while (i <= pos)
+        {
+            printf("%c", fgetc(fpt));
+            i++;
+            fseek(fpt, -i, SEEK_END);
+        }
+        printf("\n");
+    }
+    else
+    {
+        printf("Failed to oper file\n");
+    }
+
+    fclose(fpt);
     return 0;
 }
