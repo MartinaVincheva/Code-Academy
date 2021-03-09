@@ -8,6 +8,24 @@
 
 int main()
 {
+    FILE *fpt = NULL;
+    char c;
+    int counter = 0;
 
+    fpt = fopen("C:\\Users\\Marti\\codeAcademy\\gitRepo\\Code-Academy\\20210308_Tasks\\file13.txt", "r");
+    if (NULL == fpt)
+    {
+        printf("Failed to open file13.txt.\n");
+    }
+    else
+    {
+        while ((c = getc(fpt)) != EOF)
+        {
+            if (c == '\n')
+                counter += 1;
+        }
+    }
+    printf("Lines are %d.\n", counter + 1);
+    fclose(fpt);
     return 0;
 }
