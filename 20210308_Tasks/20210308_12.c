@@ -16,6 +16,20 @@ ftell()
 
 int main()
 {
-
+    FILE *fpt = NULL;
+    fpt = fopen("C:\\Users\\Marti\\codeAcademy\\gitRepo\\Code-Academy\\20210308_Tasks\\test12.txt", "w");
+    if (NULL == fpt)
+    {
+        printf("Failed to open file.\n");
+    }
+    else
+    {
+        fprintf(fpt, "%s %s %s %d", "We", "are", "in", 2021);
+    }
+    fseek(fpt, 4, SEEK_END);
+    fputs("Check", fpt);
+    fseek(fpt, 0, SEEK_SET);
+    fputs("Beginning", fpt);
+    fclose(fpt);
     return 0;
 }
