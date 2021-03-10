@@ -36,6 +36,41 @@ OUTPUT3.TXT
 
 int main()
 {
+    FILE *fptIn = NULL;
+    FILE *fptOut = NULL;
+    fptIn = fopen("C:\\Users\\Marti\\codeAcademy\\gitRepo\\Code-Academy\\20210308_Tasks\\INPUT3.txt", "rt");
+    fptOut = fopen("C:\\Users\\Marti\\codeAcademy\\gitRepo\\Code-Academy\\20210308_Tasks\\OUTPUT3.txt", "w");
+    int input[11] = {0};
+    float pricePerKm = 0;
+    int km, distance, price = 0;
+
+    if (fptIn == NULL && fptOut == NULL)
+    {
+        printf("Failed to open file.\n");
+    }
+    else
+    {
+        int i = 0;
+        while (fscanf(fptIn, "%d ", &km) != EOF)
+        {
+            input[i] = km;
+            i++;
+        }
+    }
+    pricePerKm = (float)input[0] / 1;
+
+    distance = input[10];
+    if (distance <= 100)
+    {
+        printf("%d\n", distance);
+        printf("%d\n", input[10 - 1]);
+        price += input[10 - 1];
+        distance -= 10;
+    }
+    printf("%d %d\n", distance, input[distance - 1]);
+    price += input[distance - 1];
+    printf("%d", price);
+    fclose(fptIn);
 
     return 0;
 }
