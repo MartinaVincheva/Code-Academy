@@ -38,7 +38,26 @@ int main(int argc, char *argv[])
 
     fclose(fpIn);
     fclose(fpOut);
-    remove("C:\\Users\\Marti\\codeAcademy\\gitRepo\\Code-Academy\\20210308_Tasks\\file14.txt");
-    rename("C:\\Users\\Marti\\codeAcademy\\gitRepo\\Code-Academy\\20210308_Tasks\\outfile14.txt", "C:\\Users\\Marti\\codeAcademy\\gitRepo\\Code-Academy\\20210308_Tasks\\file14.txt");
+    int rem = remove("C:\\Users\\Marti\\codeAcademy\\gitRepo\\Code-Academy\\20210308_Tasks\\file14.txt");
+
+    if (rem == 0)
+    {
+        printf("File removed successfully.\n");
+    }
+    else
+    {
+        printf("Unable to remove the file.\n");
+    }
+    int ren = rename("C:\\Users\\Marti\\codeAcademy\\gitRepo\\Code-Academy\\20210308_Tasks\\outfile14.txt", "C:\\Users\\Marti\\codeAcademy\\gitRepo\\Code-Academy\\20210308_Tasks\\file14.txt");
+
+    if (ren == 0)
+    {
+        printf("File renamed successfully.\n");
+    }
+    else
+    {
+        printf("Unable to rename the file.\n");
+    }
+
     return 0;
 }
