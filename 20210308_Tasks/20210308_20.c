@@ -42,7 +42,7 @@ int main()
     fptOut = fopen("C:\\Users\\Marti\\codeAcademy\\gitRepo\\Code-Academy\\20210308_Tasks\\OUTPUT3.txt", "w");
     int input[11] = {0};
     float pricePerKm = 0;
-    int km, distance, price = 0;
+    int km, distance, price = 0, cheapestP = 0;
 
     if (fptIn == NULL && fptOut == NULL)
     {
@@ -51,25 +51,35 @@ int main()
     else
     {
         int i = 0;
-        while (fscanf(fptIn, "%d ", &km) != EOF)
+        while (fscanf(fptIn, "%d,", &km) != EOF)
         {
             input[i] = km;
             i++;
         }
     }
     pricePerKm = (float)input[0] / 1;
+    for (int i = 1; i < 10; i++)
+    {
+        if (pricePerKm > (float)input[i] / (i + 1))
+        {
+            pricePerKm = (float)input[i] / (i + 1);
+            cheapestP = i;
+        }
+    }
 
     distance = input[10];
-    if (distance <= 100)
+    cheapestP += 1;
+
+    while (distance >= cheapestP)
     {
-        printf("%d\n", distance);
-        printf("%d\n", input[10 - 1]);
-        price += input[10 - 1];
-        distance -= 10;
+        fprintf(fptOut, "%d\n", distance);
+        fprintf(fptOut, "%d %d\n", cheapestP, input[cheapestP - 1]);
+        price += input[cheapestP - 1];
+        distance -= cheapestP;
     }
-    printf("%d %d\n", distance, input[distance - 1]);
+    fprintf(fptOut, "%d %d\n", distance, input[distance - 1]);
     price += input[distance - 1];
-    printf("%d", price);
+    fprintf(fptOut, "Total price :%d\n", price);
     fclose(fptIn);
 
     return 0;
