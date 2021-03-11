@@ -12,24 +12,24 @@
 #include <unistd.h>
 #include <time.h>
 #include <signal.h>
-#include "20210310_06 alarm.h"
 
-extern int i;
-extern int j;
+#define SIGALRM 14
 
-int main()
+int i = 0;
+int j = 0;
+long T0 = 0;
+jmp_buf Env;
+
+void alarm_me(int d)
 {
+    long t1sec;
+    t1sec = time(0) - T0;
+    printf("%d second %s has passed: j = %d. i = % d \n ", t1sec, (t1sec == 1) ? "" : "s", j, i);
+    if (t1sec >= 8)
+    {
+        printf("Giving up\n");
+        longjmp(Env, 1);
+    }
+    exit(1);
     signal(SIGALRM, alarm_me);
-    alarm_me(1);
-    if (setjmp(Env) != 0)
-    {
-        printf("Gave up: j = %d, i = %d\n", j, i);
-        exit(1);
-    }
-    T0 = time(0);
-    for (j = 0; j < 10000; j++)
-    {
-        for (i = 0; i < 1000000; i++)
-            ;
-    }
 }

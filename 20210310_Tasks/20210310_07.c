@@ -1,4 +1,5 @@
-/* Задача 2 .  */
+/* Задача 7 . Напишете програма, която обработва Ctrl+C
+Ctrl+D, Ctrl+Z  */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
