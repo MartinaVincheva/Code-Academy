@@ -29,12 +29,18 @@ void fnTraceBegin(const char *fname)
 
 void fnTraceSuccess(const char *fname)
 {
-    fprintf(traceFile, "\"%s\" function success\n", fname);
+    if (NULL != traceFile)
+    {
+        fprintf(traceFile, "\"%s\" function success\n", fname);
+    }
 }
 
 void fnTraceError(const char *fname)
 {
-    fprintf(traceFile, "\"%s\" function error\n", fname);
+    if (NULL == traceFile)
+    {
+        fprintf(traceFile, "\"%s\" function error\n", fname);
+    }
 }
 
 void fnTraceEnd(void)
@@ -61,6 +67,7 @@ parcel *ClientsParcels(int *count)
         scanf("%f", &parcels[i].volume);
     }
     fnTraceSuccess(__func__);
+    fnTraceError(__func__);
     return (parcels);
 }
 
@@ -108,6 +115,7 @@ float getPriceForWeight(float totalWeight)
         return 10.00;
     }
     fnTraceSuccess(__func__);
+    fnTraceError(__func__);
 }
 
 float getPriceForVolume(float totalVolume)
@@ -150,6 +158,7 @@ float getPriceForVolume(float totalVolume)
         return (5.79);
     }
     fnTraceSuccess(__func__);
+    fnTraceError(__func__);
 }
 
 void sum_w_v(parcel *parcels, int count)
@@ -202,6 +211,7 @@ void sum_w_v(parcel *parcels, int count)
         }
     }
     fnTraceSuccess(__func__);
+    fnTraceError(__func__);
 }
 
 int main()
@@ -215,6 +225,7 @@ int main()
     sum_w_v(parcels, parcelsCount);
     free(parcels);
     fnTraceSuccess(__func__);
+    fnTraceError(__func__);
     fnTraceEnd();
     return 0;
 }
