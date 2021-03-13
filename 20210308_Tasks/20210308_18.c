@@ -7,8 +7,8 @@ char gender;
 в XML формат по показания в лекцията начин.*/
 #include <stdio.h>
 
-static const char *FORMAT_PERSON_IN = "(%[^,], %d, %c)\n";
-static const char *FORMAT_PERSON_OUT = "(%s, %d, %c)\n";
+static const char *FORMAT_PERSON_IN = "<Person>\n\t<Name> %s </Name>\n\t<Age> %d </Age>\n\t<Gender> %c </Gender>\n</Person>\n";
+static const char *FORMAT_PERSON_OUT = "<Person>\n\t<Name> %s </Name>\n\t<Age> %d </Age>\n\t<Gender> %c </Gender>\n</Person>\n";
 
 typedef struct Person
 {
@@ -25,7 +25,7 @@ int main(void)
         .gender = 'F'};
     t_person dm;
     FILE *fp;
-    fp = fopen("C:\\Users\\Marti\\codeAcademy\\gitRepo\\Code-Academy\\20210308_Tasks\\people.dat", "w+");
+    fp = fopen("C:\\Users\\Marti\\codeAcademy\\gitRepo\\Code-Academy\\20210308_Tasks\\people.xml", "w+");
     if (NULL == fp)
         return 1;
     fprintf(fp, FORMAT_PERSON_OUT, m.name, m.age, m.gender);
