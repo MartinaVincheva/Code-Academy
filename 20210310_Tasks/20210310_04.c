@@ -211,7 +211,6 @@ void sum_w_v(parcel *parcels, int count)
         }
     }
     fnTraceSuccess(__func__);
-    fnTraceError(__func__);
 }
 
 int main()
@@ -225,7 +224,6 @@ int main()
     sum_w_v(parcels, parcelsCount);
     free(parcels);
     fnTraceSuccess(__func__);
-    fnTraceError(__func__);
     fnTraceEnd();
     return 0;
 }

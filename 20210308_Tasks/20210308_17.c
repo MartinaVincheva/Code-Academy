@@ -8,10 +8,14 @@ maraton.exe | sort.exe
 изведете списък с участниците.
 Задача 15 Използвайки предишното упражнение, изведете
 участниците подредени по азбучен ред.*/
-#include <stdio.h>
 
-int main()
-{
-
-    return 0;
-}
+/*
+./20210226_14.exe | ./20210226_15.exe
+3
+67 Asen Dimitrov 15
+123 Nedyalko Zhelyazkov 17
+1 Gina Stoycheva 89
+|67 | Asen | Dimitrov | 15 |
+|1 | Gina | Stoycheva | 89 |
+|123 | Nedyalko | Zhelyazkov | 17 | 
+*/
