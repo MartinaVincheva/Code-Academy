@@ -9,12 +9,13 @@ int main()
 {
     int i;
     init();
-    for (i = 1; i < 15; ++i)
+    for (i = 14; i > 0; i--)
         if (0 != add(i))
             break;
     printList();
-    t_node *current = search_iter(5);
-    printCurrent(current);
+
+    printNthElementFromTail(start, 5);
+    dellList();
 
     return 0;
 }

@@ -17,10 +17,6 @@ extern t_node *start;
 
 void init();
 int add(int n);
-
-t_node *search_iter(int n);
-
+int printNthElementFromTail(t_node *node, int n);
 void printList();
-void printCurrent(t_node *current);
-
 void dellList(void);

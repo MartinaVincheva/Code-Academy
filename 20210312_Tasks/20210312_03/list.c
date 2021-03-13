@@ -21,17 +21,20 @@ int add(int n)
     return 0;
 }
 
-t_node *search_iter(int k)
+int printNthElementFromTail(t_node *node, int n)
 {
-    t_node *p = start;
-    while (p->data != k)
+    if (node->next == NULL)
     {
-        if (p->next == NULL)
-            return NULL;
-        else
-            p = p->next;
+        return 1;
     }
-    return p;
+    else
+    {
+        int level = 1 + printNthElementFromTail(node->next, n);
+
+        if (level == n)
+            printf("Element 5 from end is %d\n", node->data);
+        return (level);
+    }
 }
 
 void printList()
@@ -49,12 +52,6 @@ void printList()
         ptr = ptr->next;
     }
     printf("\n");
-}
-
-void printCurrent(t_node *current)
-{
-    t_node *p = current;
-    printf("current element = %d\n", p->data);
 }
 
 void dellList(void)
