@@ -179,3 +179,18 @@ void printCurr(treeNode_t *curr)
     treeNode_t *p = curr;
     printf("curr - %d", p->data);
 }
+
+void dellEnd(int *n)
+{
+    treeNode_t *q;
+    treeNode_t *p = tree;
+
+    while (p->right != NULL)
+    {
+        q = p;
+        p = p->right;
+    }
+    *n = p->data;
+    q->right = NULL;
+    free(p);
+}

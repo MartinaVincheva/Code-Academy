@@ -15,8 +15,9 @@ int main()
     insertX(100, &tree);
     insertX(5, &tree);
 
+    printf("Right part:");
     printRight(tree);
-    printf("\n");
+    printf("\nLeft part:");
     printLeft(tree);
     printf("\n");
 

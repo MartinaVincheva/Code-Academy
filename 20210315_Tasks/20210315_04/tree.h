@@ -27,3 +27,4 @@ treeNode_t *search_iter(treeNode_t *t, int k);
 treeNode_t *search_rec(treeNode_t *t, int n);
 int del(int n);
 void printCurr(treeNode_t *curr);
+void dellEnd(int *n);
