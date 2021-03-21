@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define STAR *************************************************************************************
 #define DATA_FILE_NAME "c:\\temp\\cards.dta"
 #define CSV_FILE_NAME "c:\\temp\\cards.csv"
 #define MAX_INPUT_STR 255
@@ -79,6 +78,7 @@ node *importData(node *start_node)
 {
     business_card *card = (business_card *)malloc(sizeof(business_card));
 
+    printf("\n==============================================================\n");
     printf("Please enter following information which is needed for Business Card!\n");
     card->firstName = readString("Enter First Name:");
     card->middleName = readString("Enter Middle Name :");
@@ -88,6 +88,7 @@ node *importData(node *start_node)
     card->companyAddress = readString("Enter Company address :");
     card->homeTelNumber = read_int("Enter Home telephone number :");
     card->businessTelNumber = read_int("Enter Business telephone number :");
+    printf("\n==============================================================\n");
     return (addNodeToStart(start_node, card));
 }
 
@@ -209,6 +210,7 @@ static void search3Types(node *start_node)
     char temp[3];
     node *current;
 
+    printf("\n==============================================================\n");
     printf("Please chose how you want to serch for a bussiness card:\n");
     printf("1.Search by First name.\n");
     printf("2.Search by Last name.\n");
@@ -286,6 +288,7 @@ static void sortCards(node *start_node)
     int choice;
     char temp[3];
 
+    printf("\n==============================================================\n");
     printf("Please chose how you want to sort the business cards:\n");
     printf("1.By First name.\n");
     printf("2.By Last name.\n");
@@ -297,14 +300,20 @@ static void sortCards(node *start_node)
     {
     case 1:
         sortList(start_node, &compareNodesByFirstName);
+        printf("\n==============================================================\n");
+        printf("Sorted list by First Name:\n");
         printListFrom(start_node);
         break;
     case 2:
         sortList(start_node, &compareNodesByLastName);
+        printf("\n==============================================================\n");
+        printf("Sorted list by Last Name:\n");
         printListFrom(start_node);
         break;
     case 3:
         sortList(start_node, &compareNodesByCompanyName);
+        printf("\n==============================================================\n");
+        printf("Sorted list by Company:\n");
         printListFrom(start_node);
         break;
     default:
@@ -320,10 +329,13 @@ void cardManager(void)
     node *myData = NULL;
 
     myData = loadCardsData(myData, DATA_FILE_NAME, 0);
+    printf("\n==============================================================\n");
     printf("Welcome to Business card program!\n");
+    printf("\n==============================================================\n");
     do
     {
         fflush(stdin);
+        printf("\n==============================================================\n");
         printf("Please, chose from the menu what you want to do!\n");
         printf("1.Add new business card(s).\n");
         printf("2.Search for a business card.\n");
@@ -339,7 +351,9 @@ void cardManager(void)
         {
         case 0:
         {
+            printf("\n==============================================================\n");
             printf("Thank you for using the program!\nSee you soon!\n");
+            printf("\n==============================================================\n");
             saveCardsData(myData, DATA_FILE_NAME, &noHeader);
             dellList(myData, &business_card_free);
             myData = NULL;
