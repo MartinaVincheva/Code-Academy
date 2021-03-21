@@ -3,20 +3,44 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define STAR *************************************************************************************
 #define DATA_FILE_NAME "c:\\temp\\cards.dta"
+#define CSV_FILE_NAME "c:\\temp\\cards.csv"
 #define MAX_INPUT_STR 255
 const char *CSV_FORMAT_OUT = "%s,%s,%s,%d,%d,%s,%s,%s\n";
 
-business_card *myData = NULL;
-
-static void printCard(business_card *current)
+typedef struct business_card
 {
-    printf("%s, %s, %s, %d, %d, %s, %s, %s\n", current->firstName, current->middleName, current->lastName, current->homeTelNumber, current->bussinessTelNumber, current->email, current->company, current->companyAddress);
+    char *firstName;
+    char *middleName;
+    char *lastName;
+    int homeTelNumber;
+    int businessTelNumber;
+    char *email;
+    char *company;
+    char *companyAddress;
+} business_card;
+
+static void business_card_free(void *data)
+{
+    business_card *card = (business_card *)data;
+    free(card->firstName);
+    free(card->middleName);
+    free(card->lastName);
+    free(card->company);
+    free(card->companyAddress);
+    free(card->email);
+    free(card);
 }
 
-static void printListFrom(business_card *startNode)
+static void printCard(business_card *data)
 {
-    business_card *ptr = startNode;
+    printf("%s, %s, %s, %d, %d, %s, %s, %s\n", data->firstName, data->middleName, data->lastName, data->homeTelNumber, data->businessTelNumber, data->email, data->company, data->companyAddress);
+}
+
+static void printListFrom(node *startNode)
+{
+    node *ptr = startNode;
 
     if (startNode == NULL)
     {
@@ -25,8 +49,8 @@ static void printListFrom(business_card *startNode)
     }
     while (ptr != NULL)
     {
-        printCard(ptr);
-        ptr = ptr->next;
+        printCard((business_card *)ptr->data);
+        ptr = getNextNode(ptr);
     }
     printf("\n");
 }
@@ -51,7 +75,7 @@ static int read_int(char *str)
     return (atoi(temp));
 }
 
-static void importData(void)
+node *importData(node *start_node)
 {
     business_card *card = (business_card *)malloc(sizeof(business_card));
 
@@ -63,24 +87,35 @@ static void importData(void)
     card->company = readString("Enter Company :");
     card->companyAddress = readString("Enter Company address :");
     card->homeTelNumber = read_int("Enter Home telephone number :");
-    card->bussinessTelNumber = read_int("Enter Business telephone number :");
-    myData = addNodeToStart(myData, card);
+    card->businessTelNumber = read_int("Enter Business telephone number :");
+    return (addNodeToStart(start_node, card));
 }
 
-static void saveCardsData(business_card *start)
+static void csvHeader(FILE *file)
+{
+    fprintf(file, "%s,%s,%s,%s,%s,%s,%s,%s\n", "First Name", "Middle Name", "Last Name", "Home Telephone Number", "Business Telephone Number", "e-m@il", "Company Name", "Company Address");
+}
+
+static void noHeader(FILE *file)
+{
+}
+
+static void saveCardsData(node *start_node, char *fileName, void (*header)(FILE *out))
 {
     FILE *myCardsData = NULL;
 
-    myCardsData = fopen(DATA_FILE_NAME, "w");
+    myCardsData = fopen(fileName, "w");
     if (NULL == myCardsData)
     {
         printf("Unable to save card data!\n");
         return;
     }
-    while (NULL != start)
+    header(myCardsData);
+    while (NULL != start_node)
     {
-        fprintf(myCardsData, CSV_FORMAT_OUT, start->firstName, start->middleName, start->lastName, start->homeTelNumber, start->bussinessTelNumber, start->email, start->company, start->companyAddress);
-        start = start->next;
+        business_card *data = (business_card *)start_node->data;
+        fprintf(myCardsData, CSV_FORMAT_OUT, data->firstName, data->middleName, data->lastName, data->homeTelNumber, data->businessTelNumber, data->email, data->company, data->companyAddress);
+        start_node = getNextNode(start_node);
     }
     fclose(myCardsData);
 }
@@ -91,15 +126,15 @@ static void cardFillString(char **item, char *string)
     strcpy(*item, string);
 }
 
-static void loadCardsData(business_card *start)
+node *loadCardsData(node *start_node, char *fileName, int skip_lines)
 {
     FILE *myCardsData = NULL;
     char line[MAX_INPUT_STR], *p = line;
 
-    myCardsData = fopen(DATA_FILE_NAME, "r");
+    myCardsData = fopen(fileName, "r");
     if (NULL == myCardsData)
     {
-        return;
+        return (NULL);
     }
     for (int readLen = 1; readLen > 0;)
     {
@@ -116,6 +151,12 @@ static void loadCardsData(business_card *start)
         }
         else
         {
+            if (skip_lines)
+            {
+                p = line;
+                skip_lines--;
+                continue;
+            }
             business_card *card = (business_card *)malloc(sizeof(business_card));
             *p = '\0';
 
@@ -123,59 +164,50 @@ static void loadCardsData(business_card *start)
             cardFillString(&card->middleName, strtok(NULL, ",")); /* Mid name */
             cardFillString(&card->lastName, strtok(NULL, ","));   /* Last name */
 
-            card->homeTelNumber = atoi(strtok(NULL, ","));      /* Home phone */
-            card->bussinessTelNumber = atoi(strtok(NULL, ",")); /* Office phone */
+            card->homeTelNumber = atoi(strtok(NULL, ","));     /* Home phone */
+            card->businessTelNumber = atoi(strtok(NULL, ",")); /* Office phone */
 
             cardFillString(&card->email, strtok(NULL, ","));          /* Email */
             cardFillString(&card->company, strtok(NULL, ","));        /* Company */
             cardFillString(&card->companyAddress, strtok(NULL, ",")); /* Company address*/
 
-            myData = addNodeToStart(myData, card);
+            start_node = addNodeToStart(start_node, card);
             p = line;
         }
     }
     fclose(myCardsData);
+    return (start_node);
 }
 
-static int compareFirstName(business_card *node, char *string)
+static int compareFirstName(void *data, char *string)
 {
-    return (strcmp(node->firstName, string));
+    return (strcmp(((business_card *)data)->firstName, string));
 }
 
-static int compareLastName(business_card *node, char *string)
+static int compareLastName(void *data, char *string)
 {
-    return (strcmp(node->lastName, string));
+    return (strcmp(((business_card *)data)->lastName, string));
 }
 
-static int compareCompanyName(business_card *node, char *string)
+static int compareCompanyName(void *data, char *string)
 {
-    return (strcmp(node->company, string));
+    return (strcmp(((business_card *)data)->company, string));
 }
 
-static business_card *search(business_card *start, char *string, int (*compare)(business_card *node, char *string))
+static void printSearchResult(node *n)
 {
-    business_card *p = start;
-
-    do
-    {
-        if (0 == compare(p, string))
-        {
-            return p;
-        }
-        else
-        {
-            p = p->next;
-        }
-    } while (p != NULL);
-    return NULL;
+    printf("\n==============================================================\n");
+    printf("Found card:\n");
+    printCard((business_card *)n->data);
+    printf("==============================================================\n");
 }
 
-static void search3Types(business_card *start)
+static void search3Types(node *start_node)
 {
     int choice;
     char name[20];
     char temp[3];
-    business_card *current;
+    node *current;
 
     printf("Please chose how you want to serch for a bussiness card:\n");
     printf("1.Search by First name.\n");
@@ -188,11 +220,11 @@ static void search3Types(business_card *start)
     {
     case 1:
         printf("Please enter First name to search:");
-        scanf("%s", name);
-        current = search(start, name, &compareFirstName);
+        gets(name);
+        current = searchListNode(start_node, name, &compareFirstName);
         if (NULL != current)
         {
-            printCard(current);
+            printSearchResult(current);
         }
         else
         {
@@ -201,11 +233,11 @@ static void search3Types(business_card *start)
         break;
     case 2:
         printf("Please enter Last name to search:");
-        scanf("%s", name);
-        current = search(start, name, &compareLastName);
+        gets(name);
+        current = searchListNode(start_node, name, &compareLastName);
         if (NULL != current)
         {
-            printCard(current);
+            printSearchResult(current);
         }
         else
         {
@@ -214,11 +246,11 @@ static void search3Types(business_card *start)
         break;
     case 3:
         printf("Please enter Company name to search:");
-        scanf("%s", name);
-        current = search(start, name, &compareCompanyName);
+        gets(name);
+        current = searchListNode(start_node, name, &compareCompanyName);
         if (NULL != current)
         {
-            printCard(current);
+            printSearchResult(current);
         }
         else
         {
@@ -234,58 +266,22 @@ static void search3Types(business_card *start)
     }
 }
 
-static int compareNodesByFirstName(business_card *node1, business_card *node2)
+static int compareNodesByFirstName(void *data1, void *data2)
 {
-    return (strcmp(node1->firstName, node2->firstName));
+    return (strcmp(((business_card *)data1)->firstName, ((business_card *)data2)->firstName));
 }
 
-static int compareNodesByLastName(business_card *node1, business_card *node2)
+static int compareNodesByLastName(void *data1, void *data2)
 {
-    return (strcmp(node1->lastName, node2->lastName));
+    return (strcmp(((business_card *)data1)->lastName, ((business_card *)data2)->lastName));
 }
 
-static int compareNodesByCompanyName(business_card *node1, business_card *node2)
+static int compareNodesByCompanyName(void *data1, void *data2)
 {
-    return (strcmp(node1->company, node2->company));
+    return (strcmp(((business_card *)data1)->company, ((business_card *)data2)->company));
 }
 
-static void swap(business_card **node1, business_card *node2, int (*compare)(business_card *node1, business_card *node2))
-{
-}
-
-static void sort(business_card **start, int (*compare)(business_card *node1, business_card *node2))
-{
-    int swapping = 0;
-    business_card *prev = NULL;
-
-    if (start == NULL)
-    {
-        return;
-    }
-    business_card *current = start;
-    if (current == NULL)
-    {
-        return;
-    }
-    business_card *next = current->next;
-    do
-    {
-        // swapping = 0;
-        // ptr1 = start;
-        // while (ptr1->next != rtp1)
-        // {
-        //     if (compare(ptr1, ptr1->next->firstName) > 0)
-        //     {
-        //         swap(ptr1, ptr1->next);
-        //         swapping = 1;
-        //     }
-        //     ptr1 = ptr1->next;
-        // }
-        // rtp1 = ptr1;
-    } while (swapping);
-}
-
-static void print3Types(business_card *start)
+static void sortCards(node *start_node)
 {
     int choice;
     char temp[3];
@@ -300,16 +296,16 @@ static void print3Types(business_card *start)
     switch (choice)
     {
     case 1:
-        sort(start, &compareNodesByFirstName);
-        printListFrom(myData);
+        sortList(start_node, &compareNodesByFirstName);
+        printListFrom(start_node);
         break;
     case 2:
-        sort(start, &compareNodesByLastName);
-        printListFrom(myData);
+        sortList(start_node, &compareNodesByLastName);
+        printListFrom(start_node);
         break;
     case 3:
-        sort(start, &compareNodesByCompanyName);
-        printListFrom(myData);
+        sortList(start_node, &compareNodesByCompanyName);
+        printListFrom(start_node);
         break;
     default:
         printf("Invalid input!\nPlease try again!\n");
@@ -321,29 +317,39 @@ void cardManager(void)
 {
     int choice = 0;
     char temps[3] = {0};
+    node *myData = NULL;
 
-    loadCardsData(myData);
+    myData = loadCardsData(myData, DATA_FILE_NAME, 0);
     printf("Welcome to Business card program!\n");
     do
     {
         fflush(stdin);
         printf("Please, chose from the menu what you want to do!\n");
-        printf("1.Add new Business cards.\n");
-        printf("2.Search for a Business card.\n");
-        printf("3.Sort the available Business cards.\n");
-        printf("4.Open CSV file with Business cards.\n");
-        printf("5.EXIT\n");
+        printf("1.Add new business card(s).\n");
+        printf("2.Search for a business card.\n");
+        printf("3.Sort the available business cards.\n");
+        printf("4.Export CSV file.\n");
+        printf("5.Import CSV file.\n");
+        printf("6.Clear card database.\n");
+        printf("0.EXIT\n");
         gets(temps);
         choice = atoi(temps);
 
-        printf(">%02X<\n", choice);
         switch (choice)
         {
+        case 0:
+        {
+            printf("Thank you for using the program!\nSee you soon!\n");
+            saveCardsData(myData, DATA_FILE_NAME, &noHeader);
+            dellList(myData, &business_card_free);
+            myData = NULL;
+            break;
+        }
         case 1:
         {
             do
             {
-                importData();
+                myData = importData(myData);
                 printf(
                     "Do you want to import and another Business card <Y/N>?\n");
                 gets(temps);
@@ -358,15 +364,18 @@ void cardManager(void)
             search3Types(myData);
             break;
         case 3:
-            print3Types(myData);
+            sortCards(myData);
             break;
         case 4:
-            // saveAsFile();
+            saveCardsData(myData, CSV_FILE_NAME, &csvHeader);
             break;
         case 5:
-            printf("Thank you for using the program!\nSee you soon!\n");
-            saveCardsData(myData);
-            dellList(myData);
+            myData = loadCardsData(myData, CSV_FILE_NAME, 1);
+            printListFrom(myData);
+            break;
+        case 6:
+            dellList(myData, &business_card_free);
+            myData = NULL;
             break;
         case '\r':
         case '\n':
@@ -375,5 +384,5 @@ void cardManager(void)
             printf("Invalid input!\nPlease try again!\n");
             break;
         }
-    } while (choice != 5);
+    } while (choice != 0);
 }

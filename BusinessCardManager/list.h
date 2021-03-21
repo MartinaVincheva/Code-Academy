@@ -1,20 +1,15 @@
 #pragma once
 
-typedef struct business_card business_card;
-
-typedef struct business_card
+typedef struct node node;
+typedef struct node
 {
-    char *firstName;
-    char *middleName;
-    char *lastName;
-    int homeTelNumber;
-    int bussinessTelNumber;
-    char *email;
-    char *company;
-    char *companyAddress;
-    business_card *next;
-} business_card;
+    void *data;
+    node *next;
+} node;
 
-business_card *addNodeToStart(business_card *list_start, business_card *node);
-void dellList(business_card *start);
-int lenghtList(business_card *start);
+node *addNodeToStart(node *list_start, void *data);
+int lenghtList(node *start);
+void dellList(node *list_start, void (*free_data)(void *data));
+node *getNextNode(node *n);
+node *searchListNode(node *start_node, char *string, int (*compare)(void *data, char *string));
+void sortList(node *start_node, int (*compare)(void *card1, void *card2));
