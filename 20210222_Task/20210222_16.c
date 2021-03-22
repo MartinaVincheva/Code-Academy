@@ -19,7 +19,7 @@ struct My_struct
 int main(void)
 {
     FILE *fpt;
-    fpt = fopen("20210222_15.cvs", "w+");
+    fpt = fopen("20210222_15.csv", "w+");
 
     struct My_struct My_struct[20];
 
