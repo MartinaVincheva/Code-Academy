@@ -1,0 +1,13 @@
+cmake_minimum_required(VERSION 3.5.1)
+
+project(mega_awesome_task)
+
+add_executable(
+    ${PROJECT_NAME}
+    ${CMAKE_CURRENT_SOURCE_DIR/main.c}
+    ${CMAKE_CURRENT_SOURCE_DIR/01_whatIsLove.c}
+    ${CMAKE_CURRENT_SOURCE_DIR/02_babyDontHurtMe.c}
+    ${CMAKE_CURRENT_SOURCE_DIR/03_dontHurtMe.c}
+    ${CMAKE_CURRENT_SOURCE_DIR/04_noMore.c})
+
+add_dependencies(normal_task ${PROJECT_NAME})
